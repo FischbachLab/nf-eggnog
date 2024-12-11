@@ -1,6 +1,5 @@
 #!/usr/bin/env nextflow
 
-s3_base_path = params.workingpath
 
 process annotate {
     debug true
@@ -18,6 +17,7 @@ process annotate {
     path("output/${genome_id}*")
 
     script:
+    s3_base_path = params.workingpath
     """
     mkdir -p output
     emapper.py -i ${protein_path} -o output/${genome_id} --cpu ${task.cpu}
