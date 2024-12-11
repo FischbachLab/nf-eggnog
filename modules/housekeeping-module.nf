@@ -1,8 +1,6 @@
 #!/usr/bin/env nextflow
 new groovy.json.JsonOutput
 
-s3_base_path = params.workingpath
-workflow_dir = "parameters"
 
 process printParams {
     label "small_compute"
@@ -14,8 +12,17 @@ process printParams {
 
 
     script:
+    s3_base_path = params.workingpath
+    workflow_dir = "parameters"
+
     """
     touch parameters.json
     echo '${JsonOutput.toJson(params)}' > parameters.json
+    """
+
+    stub:
+    """
+    touch parameters.json
+    echo "${s3_base_path}" > parameters.json
     """
 }
