@@ -1,0 +1,8 @@
+.git
+.nextflow*
+work/
+runs/
+data/
+*.code-workspace
+.devcontainer
+.vscode
