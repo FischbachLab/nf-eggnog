@@ -6,7 +6,7 @@ process annotate {
     tag "${genome_id}"
     label "large_compute"
     container params.eggnog_container
-    containerOptions "--volume ${params.db_path}:/db:ro"
+    // containerOptions "--volume ${params.db_path}:/db:ro"
 
     publishDir "${s3_base_path}/genome_id=${genome_id}", mode: 'copy', pattern: "${genome_id}*", saveAs: { "${file(it).getName()}" }
 
@@ -20,7 +20,7 @@ process annotate {
     s3_base_path = params.workingpath
     """
     mkdir -p output
-    emapper.py -i ${protein_path} -o output/${genome_id} --cpu ${task.cpus}
+    emapper.py -i ${protein_path} -o output/${genome_id} --cpu ${task.cpus} --data_dir ${params.db_path}
     """
 
     stub:
