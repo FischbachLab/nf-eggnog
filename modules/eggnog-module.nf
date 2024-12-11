@@ -20,7 +20,7 @@ process annotate {
     s3_base_path = params.workingpath
     """
     mkdir -p output
-    emapper.py -i ${protein_path} -o output/${genome_id} --cpu ${task.cpu}
+    emapper.py -i ${protein_path} -o output/${genome_id} --cpu ${task.cpus}
     """
 
     stub:
