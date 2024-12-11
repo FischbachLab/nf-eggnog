@@ -73,7 +73,7 @@ workflow {
     case ["annotate"]:
         take: proteins_ch
         main:
-            printParams()
+            // printParams()
             ANNOTATE(proteins_ch)
         break
     default:

@@ -24,8 +24,9 @@ process annotate {
     """
 
     stub:
+    s3_base_path = params.workingpath
     """
-    echo "genome_id: ${genome_id}, project_dir: ${s3_base_path}" > stub.txt
+    # echo "genome_id: ${genome_id}, project_dir: ${s3_base_path}" > stub.txt
     echo "emapper.py -i ${protein_path} -o output/${genome_id} --cpu ${task.cpu}" >> stub.txt
     mkdir -p output
     cp stub.txt output/${genome_id}.emapper.annotations  

@@ -1,12 +1,20 @@
 ```bash
 aws batch submit-job \
-    --job-name sj-egg-hcom2-20241212-1 \
+    --job-name sj-egg-hcom2-20241212-3 \
     --job-queue priority-maf-pipelines \
     --job-definition nextflow-production \
-    --container-overrides command=FischbachLab/nf-aurum-igd,\
+    --container-overrides command=FischbachLab/nf-eggnog,\
 "--workflow","annotate",\
 "--seedfile","s3://genomics-workflow-core/Results/GenomeMining/hCom2/20241106/00_seedfiles/hCom2.aurum_seedfile.csv",\
 "--project","hCom2",\
 "--outdir","s3://genomics-workflow-core/Results/EggNOG",\
 "--prefix","20241212"
+```
+
+```bash
+nextflow run . \
+    --profile local \
+    -stub \
+    --workflow annotate \
+    --seedfile test/test_seedfile.csv
 ```
