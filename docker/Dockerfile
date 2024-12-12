@@ -1,6 +1,6 @@
 FROM python:3.10 as base
 ARG VERSION=2.1.12
-ENV EGGNOG_DATA_DIR=/db
+# ENV EGGNOG_DATA_DIR=/db
 
 RUN apt-get update && apt-get install -y \
     wget \
