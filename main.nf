@@ -49,10 +49,12 @@ switch (workflow) {
     case ["annotate"]:
         log.info "Initiating ANNOTATE workflow: Run EggNog on all genomes."
         include {annotate} from "./modules/eggnog-module.nf"
+        db_ch = Channel.fromPath(params.db_tarball)
         proteins_ch = Channel.fromPath(params.seedfile, checkIfExists: true) \
             | ifEmpty { exit 1, "Cannot find any seed file matching: ${params.seedfile}." } \
             | splitCsv(header:true) \
             | map{ row -> tuple(row.genome_id, file(row.faa_path))}
+            | combine(db_ch)
         break
     default:
         exit 1, "No workflow specified! #1"
