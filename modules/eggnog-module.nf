@@ -8,7 +8,7 @@ process annotate {
     container params.eggnog_container
     // containerOptions "--volume ${params.db_path}:/db:ro"
 
-    publishDir "${s3_base_path}/genome_id=${genome_id}", mode: 'copy', pattern: "${genome_id}*", saveAs: { "${file(it).getName()}" }
+    publishDir "${s3_base_path}/genome_id=${genome_id}", mode: 'copy', pattern: "output/${genome_id}*", saveAs: { "${file(it).getName()}" }
 
     input:
     tuple val(genome_id), path(protein_path), path(db_tarball)
@@ -20,8 +20,10 @@ process annotate {
     s3_base_path = params.workingpath
     """
     tar pxzf ${db_tarball}
+    rm -rf ${db_tarball}
     mkdir -p output
     emapper.py -i ${protein_path} -o output/${genome_id} --cpu ${task.cpus} --data_dir ${params.db_path}
+    rm -rf ${params.db_path}
     """
 
     stub:
